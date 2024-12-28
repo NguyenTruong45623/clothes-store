@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="fm"
+            type="androidx.fragment.app.FragmentManager" />
+        <variable
+            name="viewModel"
+            type="com.example.bt2.feature.verifyCode.VerifyCodeViewModel" />
+    </data>
+    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginHorizontal="20sp"
+        android:orientation="vertical"
+        android:gravity="center|top"
+        tools:ignore="ExtraText">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp"/>
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:onClick="@{(v) -> viewModel.onClickBackButton(fm)}"
+            android:layout_gravity="start"
+            android:background="@drawable/round_background"
+            android:src="@drawable/baseline_arrow_back_24"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Verify Code"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="700"
+            android:textSize="25sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="500"
+            android:textColor="@color/gray"
+            android:text="Please enter the code we just sent to email" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="500"
+            android:textColor="@color/brown"
+            android:text="example@email.com" />
+
+
+        <com.chaos.view.PinView
+            android:id="@+id/pinview"
+            app:itemCount="4"
+            app:itemWidth="50dp"
+            app:itemHeight="50dp"
+            android:gravity="center"
+            android:layout_marginTop="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:inputType="number"
+            android:cursorVisible="true"
+            app:hideLineWhenFilled="false"
+            app:itemRadius="10dp"
+            style="@style/PinWidget.PinView"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="MissingClass" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Agree with Terms &amp; Condition" />
+        <TextView
+            android:id="@+id/tvResendCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="500"
+            android:textColor="@color/brown"
+            android:text="Resend code" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20sp"/>
+        <Button
+            android:onClick="@{(v) -> viewModel.onClickVerifyButton(fm)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Verify"
+            android:textSize="20sp"
+            android:paddingVertical="10sp"
+            android:backgroundTint="@color/brown"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <variable
+            name="fm"
+            type="androidx.fragment.app.FragmentManager" />
+        <variable
+            name="viewModel"
+            type="com.example.bt2.feature.welcome.WelcomeViewModel" />
+    </data>
+    <LinearLayout android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:gravity="top|center_horizontal"
+        android:background="@color/white"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginVertical="30dp"
+            android:layout_marginHorizontal="25dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+            <!-- Hình ảnh lớn bên trái -->
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/banner"
+                app:shapeAppearance="@style/circle"
+                tools:ignore="ContentDescription" />
+
+            <Space
+                android:layout_width="15dp"
+                android:layout_height="match_parent" />
+            <!-- Hai hình nhỏ bên phải -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/banner"
+                    app:shapeAppearance="@style/circle"
+                    tools:ignore="ContentDescription,NestedWeights" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="2"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/banner"
+                    app:shapeAppearance="@style/circle"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvTitleTheFashionApp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:gravity="center"
+            android:text="@string/the_fashion_app_that_makes_you_look_your_best"
+            android:textSize="25sp"
+            android:fontFamily="sans-serif-black"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="25dp"
+            android:layout_marginVertical="10dp"
+            android:gravity="center"
+            android:text="@string/lorem_ipsum_dolor_sit_amet_consectetur"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{(v) -> viewModel.onClickButtonLetStart(fm)}"
+            android:layout_marginHorizontal="25dp"
+            android:text="@string/let_s_get_start"
+            android:paddingVertical="10dp"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/brown" />
+
+        <TextView
+            android:id="@+id/tvSignIn"
+            android:onClick="@{(v) -> viewModel.onClickToSignIn(fm)}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="25dp"
+            android:gravity="center"
+            android:text="@string/already_have_an_account_sign_in"
+            android:textSize="20sp"/>
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="25dp"/>
+    </LinearLayout>
+</layout>

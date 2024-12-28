@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="fm"
+            type="androidx.fragment.app.FragmentManager" />
+
+        <variable
+            name="viewModel"
+            type="com.example.bt2.feature.yourProfile.YourProfileViewModel" />
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_marginHorizontal="20dp"
+        android:orientation="vertical"
+        android:gravity="top">
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:onClick="@{(v) -> viewModel.onClickBackButton(fm)}"
+            android:layout_gravity="start"
+            android:background="@drawable/round_background"
+            android:src="@drawable/baseline_arrow_back_24"/>
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Complete Your Profile"
+            android:fontFamily="sans-serif"
+            android:textFontWeight="700"
+            android:textSize="25sp" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/gray"
+            android:text="Don't worry, only you can see your personal \n data. No one else will be able to see it." />
+
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:layout_gravity="center">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/avatarImageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:backgroundTint="@color/gray"
+                android:scaleType="centerCrop"
+                android:src="@drawable/baseline_person_24"
+                android:background="@drawable/circle_background"
+                app:shapeAppearance="@style/circle"
+                tools:ignore="ContentDescription" />
+
+
+            <ImageButton
+                android:id="@+id/buttonSetAvatar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/round_background"
+                android:backgroundTint="@color/brown"
+                android:src="@drawable/baseline_mode_edit_outline_24"
+                android:layout_gravity="bottom|end"
+                tools:ignore="ContentDescription" />
+
+        </FrameLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="John Doe"
+            app:boxCornerRadiusTopStart="30dp"
+            app:boxCornerRadiusTopEnd="30dp"
+            app:boxCornerRadiusBottomStart="30dp"
+            app:boxCornerRadiusBottomEnd="30dp"
+            app:boxBackgroundMode="outline"
+            app:hintEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:importantForAccessibility="yes" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Phone Number"
+            tools:ignore="HardcodedText" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/input_text_boder"
+            android:orientation="horizontal"
+            android:paddingHorizontal="15dp"
+            android:paddingVertical="5dp">
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="80dp"
+                android:layout_height="match_parent">
+                <AutoCompleteTextView
+                    android:id="@+id/codeCountry"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:inputType="none"
+                    android:background="@android:color/transparent"
+                    android:text="+1"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <View
+                android:layout_width="3dp"
+                android:layout_height="match_parent"
+                android:background="@color/gray"
+                android:layout_marginVertical="10dp"
+                android:layout_marginHorizontal="5dp"/>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:importantForAccessibility="yes"
+                android:hint="Enter Phone Number"
+                android:maxLength="9"
+                android:background="@android:color/transparent"
+                android:inputType="phone"
+                android:textSize="16sp"/>
+        </LinearLayout>
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gender"
+            tools:ignore="HardcodedText" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            android:id="@+id/textInputLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            app:boxBackgroundMode="outline"
+            app:boxStrokeColor="#FF000000"
+            app:boxCornerRadiusTopStart="30dp"
+            app:boxCornerRadiusTopEnd="30dp"
+            app:boxCornerRadiusBottomStart="30dp"
+            app:boxCornerRadiusBottomEnd="30dp"
+            app:hintEnabled="false"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/autoSelectGender"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="15dp"
+                android:inputType="none"
+                android:hint="Select" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Create New Password"
+            android:textSize="20sp"
+            android:paddingVertical="10dp"
+            android:backgroundTint="@color/brown"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

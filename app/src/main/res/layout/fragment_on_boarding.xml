@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="fm"
+            type="androidx.fragment.app.FragmentManager" />
+        <variable
+            name="viewpager2"
+            type="androidx.viewpager2.widget.ViewPager2" />
+        <variable
+            name="viewModel"
+            type="com.example.bt2.feature.onboarding.OnBoardingViewModel" />
+    </data>
+
+    <LinearLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        tools:context=".feature.onboarding.OnBoardingFragment"
+        tools:ignore="ExtraText">
+        <TextView
+            android:onClick="@{(v) -> viewModel.onClickNext(viewpager2)}"
+            android:id="@+id/tvNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:gravity="end"
+            android:textColor="@color/brown"
+            android:layout_margin="20dp"
+            android:text="@string/next"
+            android:textSize="18sp"
+            android:textStyle="bold"/>`
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/introViewPager"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="40dp">
+            <ImageButton
+                android:id="@+id/backOnBoarding"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:onClick="@{(v) -> viewModel.onClickBack(viewpager2)}"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
+                android:background="@drawable/round_background"
+                android:src="@drawable/baseline_arrow_back_24" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/into_tab_layout"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="center_vertical"
+                app:tabBackground="@drawable/tab_pager_selector"
+                app:tabGravity="center"
+                android:background="@android:color/transparent"
+                app:tabIndicatorHeight="0dp"
+                app:tabPaddingEnd="10dp"
+                app:tabPaddingStart="10dp" >
+            </com.google.android.material.tabs.TabLayout>
+            <ImageButton
+                android:id="@+id/forwardOnBoarding"
+                android:onClick="@{(v) -> viewModel.onClickForward(viewpager2, fm)}"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/round_background"
+                android:backgroundTint="@color/brown"
+                android:src="@drawable/baseline_arrow_forward_24" />
+        </LinearLayout>
+    </LinearLayout>
+</layout>

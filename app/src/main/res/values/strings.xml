@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">bt2</string>
+    <string name="skip">Skip</string>
+    <string name="seamless_shopping_n_experience">Seamless Shopping\nExperience</string>
+    <string name="lorem_ipsum_dolor_sit_amet_consectetur_adipiscing_elit_sed_do_eiusmod_tempor_incididunt">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</string>
+    <string name="let_s_get_start">Let\'s Get Start</string>
+    <string name="the_fashion_app_that_makes_you_look_your_best">The Fashion App That Makes You Look Your Best</string>
+    <string name="lorem_ipsum_dolor_sit_amet_consectetur">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt</string>
+    <string name="already_have_an_account_sign_in">Already have an account? Sign In</string>
+    <string name="sign_in">Sign In</string>
+    <string name="hi_welcome_back_you_ve_been_missed">Hi! Welcome back, you\'ve been missed</string>
+    <string name="email">Email</string>
+    <string name="example_gmail_com">example@gmail.com</string>
+    <string name="password">PassWord</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="name">Name</string>
+    <string name="next">next</string>
+    <string name="pw">***************</string>
+    <string-array name="gender">
+        <item>Nam</item>
+        <item>Nữ</item>
+    </string-array>
+    <string-array name="codeCountry">
+        <item>+1</item>
+        <item>+84</item>
+        <item>+74</item>
+        <item>+81</item>
+        <item>+4</item>
+    </string-array>
+</resources>
