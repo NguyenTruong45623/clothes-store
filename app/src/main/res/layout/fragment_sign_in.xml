@@ -2,9 +2,6 @@
 <layout>
     <data>
         <variable
-            name="fm"
-            type="androidx.fragment.app.FragmentManager" />
-        <variable
             name="viewModel"
             type="com.example.bt2.feature.signIn.SignInViewModel" />
     </data>
@@ -93,7 +90,7 @@
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/forgotPW"
-            android:onClick="@{(v) -> viewModel.onClickForgotPassword(fm)}"
+            android:onClick="@{() -> viewModel.onClickForgotPassword()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -180,7 +177,7 @@
             android:layout_height="20dp"/>
         <TextView
             android:id="@+id/tvSignIn"
-            android:onClick="@{(v) -> viewModel.onClickSignUp(fm)}"
+            android:onClick="@{() -> viewModel.onClickSignUp()}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

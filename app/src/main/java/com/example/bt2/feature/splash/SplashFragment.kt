@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.commit
+import androidx.navigation.fragment.findNavController
 import com.example.bt2.R
 import com.example.bt2.databinding.FragmentSplashBinding
 import com.example.bt2.feature.welcome.WelcomeFragment
@@ -24,10 +25,7 @@ class SplashFragment : Fragment() {
         binding = FragmentSplashBinding.inflate(inflater, container, false)
 
         Handler(Looper.getMainLooper()).postDelayed({
-            parentFragmentManager.commit {
-                replace(R.id.fragment_container, WelcomeFragment())
-            }
-
+            findNavController().navigate(R.id.action_splashFragment_to_welcomeFragment)
         }, 5000)
 
         return binding.root

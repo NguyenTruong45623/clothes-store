@@ -1,21 +1,29 @@
 package com.example.bt2.feature.verifyCode
 
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModel
-import com.example.bt2.R
-import com.example.bt2.feature.newPassword.NewPasswordFragment
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class VerifyCodeViewModel : ViewModel() {
 
-    fun onClickVerifyButton(fragmentManager: FragmentManager) {
-            fragmentManager.commit {
-                replace(R.id.fragment_container, NewPasswordFragment())
-                addToBackStack(null)
-            }
+    private val _navigateToNewPassWord = MutableStateFlow(false)
+    val navigateToNewPassWord: StateFlow<Boolean> = _navigateToNewPassWord.asStateFlow()
+
+    private val _navigateBack = MutableStateFlow(false)
+    val navigateBack: StateFlow<Boolean> = _navigateBack.asStateFlow()
+
+
+    fun onClickVerifyButton() {
+        _navigateToNewPassWord.value = true
     }
 
-    fun onClickBackButton(fragmentManager: FragmentManager) {
-        fragmentManager.popBackStack()
+    fun onClickBackButton() {
+        _navigateBack.value = true
+    }
+
+    fun onNavigationComplete() {
+        _navigateToNewPassWord.value = false
+        _navigateBack.value = false
     }
 }

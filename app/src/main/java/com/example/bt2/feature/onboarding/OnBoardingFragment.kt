@@ -8,6 +8,10 @@ import android.view.ViewGroup
 import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.bt2.R
 import com.example.bt2.databinding.FragmentOnBoardingBinding
@@ -15,6 +19,8 @@ import com.example.bt2.feature.onboarding.ViewPage.OnBoarding1Fragment
 import com.example.bt2.feature.onboarding.ViewPage.OnBoarding2Fragment
 import com.example.bt2.feature.onboarding.ViewPage.OnBoarding3Fragment
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 class OnBoardingFragment : Fragment() {
 
@@ -30,7 +36,7 @@ class OnBoardingFragment : Fragment() {
 
         binding.viewModel = viewModel
         binding.viewpager2 = binding.introViewPager
-        binding.fm = parentFragmentManager
+        binding.lifecycleOwner = viewLifecycleOwner
 
 
         val fragmentList = arrayListOf<Fragment>(
@@ -68,6 +74,17 @@ class OnBoardingFragment : Fragment() {
                 }
             }
         })
+
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+               viewModel.navigateToSignIn.collect { navigate ->
+                   if(navigate) {
+                       findNavController().navigate(R.id.action_onBoardingFragment_to_signInFragment)
+                       viewModel.onNavigationComplete()
+                   }
+               }
+            }
+        }
 
         return binding.root
     }

@@ -3,9 +3,6 @@
 
     <data>
         <variable
-            name="fm"
-            type="androidx.fragment.app.FragmentManager" />
-        <variable
             name="viewpager2"
             type="androidx.viewpager2.widget.ViewPager2" />
         <variable
@@ -72,7 +69,7 @@
             </com.google.android.material.tabs.TabLayout>
             <ImageButton
                 android:id="@+id/forwardOnBoarding"
-                android:onClick="@{(v) -> viewModel.onClickForward(viewpager2, fm)}"
+                android:onClick="@{(v) -> viewModel.onClickForward(viewpager2)}"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_vertical"

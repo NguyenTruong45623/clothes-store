@@ -2,11 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
-
-        <variable
-            name="fm"
-            type="androidx.fragment.app.FragmentManager" />
-
         <variable
             name="viewModel"
             type="com.example.bt2.feature.yourProfile.YourProfileViewModel" />
@@ -28,7 +23,7 @@
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:onClick="@{(v) -> viewModel.onClickBackButton(fm)}"
+            android:onClick="@{() -> viewModel.onClickBackButton()}"
             android:layout_gravity="start"
             android:background="@drawable/round_background"
             android:src="@drawable/baseline_arrow_back_24"/>

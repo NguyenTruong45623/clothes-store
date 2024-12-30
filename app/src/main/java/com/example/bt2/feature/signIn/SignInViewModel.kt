@@ -12,6 +12,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class SignInViewModel : ViewModel() {
+    private val _navigateToCreateAccount = MutableStateFlow(false)
+    val navigateToCreateAccount: StateFlow<Boolean> = _navigateToCreateAccount.asStateFlow()
+
+    private val _navigateToVerifyCode = MutableStateFlow(false)
+    val navigateToVerifyCode: StateFlow<Boolean> = _navigateToVerifyCode.asStateFlow()
+
     private val _formState = MutableStateFlow(SignInFormData())
     val formState: StateFlow<SignInFormData> = _formState.asStateFlow()
 
@@ -28,37 +34,33 @@ class SignInViewModel : ViewModel() {
         val currentState = formState.value
         var updatedState = currentState.copy()
 
-        updatedState = if (currentState.email.isEmpty()) {
-            updatedState.copy(emailError = "Vui lòng nhập email")
+        if (currentState.email.isEmpty()) {
+            updatedState = updatedState.copy(emailError = "Vui lòng nhập email")
         } else if(!currentState.email.isValidEmail()) {
-            updatedState.copy(emailError = "Email không hợp lệ")
+            updatedState = updatedState.copy(emailError = "Email không hợp lệ")
+        } else if (currentState.password.length < 8) {
+            updatedState = updatedState.copy(passwordError = "Vui lòng nhập mật khẩu")
+            updatedState = updatedState.copy(emailError = null)
         } else {
-            updatedState.copy(emailError = null)
-        }
-
-        updatedState = if (currentState.password.length < 8) {
-            updatedState.copy(passwordError = "Vui lòng nhập mật khẩu")
-        } else {
-            updatedState.copy(passwordError = null)
+            updatedState = updatedState.copy(passwordError = null)
         }
 
         _formState.value = updatedState
     }
 
-    fun onClickForgotPassword(fragmentManager: FragmentManager) {
-        fragmentManager.commit {
-            replace(R.id.fragment_container, VerifyCodeFragment())
-            addToBackStack(null)
-        }
+    fun onClickForgotPassword() {
+        _navigateToVerifyCode.value = true
     }
 
     private fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
 
-    fun onClickSignUp(fragmentManager: FragmentManager) {
-        fragmentManager.commit {
-            replace(R.id.fragment_container, CreateAccountFragment())
-            addToBackStack(null)
-        }
+    fun onClickSignUp() {
+        _navigateToCreateAccount.value = true
+    }
+
+    fun onNavigationComplete() {
+        _navigateToVerifyCode.value = false
+        _navigateToCreateAccount.value = false
     }
 }

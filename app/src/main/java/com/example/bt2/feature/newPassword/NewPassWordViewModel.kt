@@ -3,14 +3,18 @@ package com.example.bt2.feature.newPassword
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 
 class NewPassWordViewModel : ViewModel() {
     private val _formData = MutableStateFlow(NewPassWordData())
     var formData = _formData.asStateFlow()
 
-    private val _clearConfirmPasswordInput = MutableStateFlow(false) // Thêm StateFlow cho confirmPassword
+    private val _clearConfirmPasswordInput = MutableStateFlow(false)
     val clearConfirmPasswordInput = _clearConfirmPasswordInput.asStateFlow()
+
+    private val _navigateBack = MutableStateFlow(false)
+    val navigateBack: StateFlow<Boolean> = _navigateBack.asStateFlow()
 
     fun onPasswordChanged(newPassword: String) {
         _formData.value = _formData.value.copy(password = newPassword)
@@ -40,7 +44,11 @@ class NewPassWordViewModel : ViewModel() {
         _formData.value = updatedState
     }
 
-    fun onClickBack(fragmentManager : FragmentManager) {
-        fragmentManager.popBackStack()
+    fun onClickBack() {
+        _navigateBack.value = true
+    }
+
+    fun onNavigationComplete() {
+        _navigateBack.value = false
     }
 }

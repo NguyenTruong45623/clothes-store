@@ -25,9 +25,44 @@
     <fragment
         android:id="@+id/onBoardingFragment"
         android:name="com.example.bt2.feature.onboarding.OnBoardingFragment"
-        android:label="OnBoardingFragment" />
+        android:label="OnBoardingFragment" >
+        <action
+            android:id="@+id/action_onBoardingFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.example.bt2.feature.signIn.SignInFragment"
-        android:label="SignInFragment" />
+        android:label="SignInFragment" >
+        <action
+            android:id="@+id/action_signInFragment_to_createAccountFragment"
+            app:destination="@id/createAccountFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_verifyCodeFragment"
+            app:destination="@id/verifyCodeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/createAccountFragment"
+        android:name="com.example.bt2.feature.createAccount.CreateAccountFragment"
+        android:label="CreateAccountFragment" >
+        <action
+            android:id="@+id/action_createAccountFragment_to_yourProfileFragment"
+            app:destination="@id/yourProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/yourProfileFragment"
+        android:name="com.example.bt2.feature.yourProfile.YourProfileFragment"
+        android:label="YourProfileFragment" />
+    <fragment
+        android:id="@+id/verifyCodeFragment"
+        android:name="com.example.bt2.feature.verifyCode.VerifyCodeFragment"
+        android:label="VerifyCodeFragment" >
+        <action
+            android:id="@+id/action_verifyCodeFragment_to_newPasswordFragment"
+            app:destination="@id/newPasswordFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newPasswordFragment"
+        android:name="com.example.bt2.feature.newPassword.NewPasswordFragment"
+        android:label="NewPasswordFragment" />
 </navigation>

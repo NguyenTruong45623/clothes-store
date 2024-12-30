@@ -15,8 +15,14 @@ import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import com.example.bt2.R
 import com.example.bt2.databinding.FragmentSignInBinding
+import com.example.bt2.until.makeLinkClickable
+import kotlinx.coroutines.launch
 
 
 class SignInFragment : Fragment() {
@@ -32,39 +38,34 @@ class SignInFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.viewModel = viewModel
-        binding.fm = parentFragmentManager
 
+        makeLinkClickable(binding.tvSignIn, "Sign Up", Color.BLUE)
+        makeLinkClickable(binding.forgotPW, "Forgot Password?", Color.BLUE)
 
-        makeLinkClickable(binding.tvSignIn, "Sign Up")
-        makeLinkClickable(binding.forgotPW, "Forgot Password?")
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToCreateAccount.collect{ navigate ->
+                    if (navigate) {
+                        findNavController().navigate(R.id.action_signInFragment_to_createAccountFragment)
+                        viewModel.onNavigationComplete()
+                    }
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.navigateToVerifyCode.collect{ navigate ->
+                    if (navigate) {
+                        findNavController().navigate(R.id.action_signInFragment_to_verifyCodeFragment)
+                        viewModel.onNavigationComplete()
+                    }
+                }
+            }
+        }
 
         return binding.root
     }
 
-    private fun makeLinkClickable(textView: TextView, clickableText: String) {
-        val fullText = textView.text.toString()
-        val ss = SpannableString(fullText)
-
-        val clickableSpan = object : ClickableSpan() {
-
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.color = Color.BLUE
-                ds.isUnderlineText = true
-            }
-
-            override fun onClick(widget: View) {
-
-            }
-        }
-
-        val startIndex = fullText.indexOf(clickableText)
-        val endIndex = startIndex + clickableText.length
-        ss.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        textView.text = ss
-        textView.movementMethod = LinkMovementMethod.getInstance()
-        textView.highlightColor = Color.TRANSPARENT
-    }
 
 }
