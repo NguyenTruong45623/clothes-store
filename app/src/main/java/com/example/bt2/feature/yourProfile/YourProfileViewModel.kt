@@ -1,23 +1,21 @@
 package com.example.bt2.feature.yourProfile
 
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 class YourProfileViewModel : ViewModel() {
 
-    private val _navigateBack = MutableStateFlow(false)
-    val navigateBack: StateFlow<Boolean> = _navigateBack.asStateFlow()
+    private val _navigateBack = MutableSharedFlow<Unit>()
+    val navigateBack: SharedFlow<Unit> = _navigateBack.asSharedFlow()
 
     fun onClickBackButton() {
-        _navigateBack.value = true
+        viewModelScope.launch {
+            _navigateBack.emit(Unit)
+        }
     }
-
-    fun onNavigationComplete() {
-        _navigateBack.value = false
-    }
-
 
 }

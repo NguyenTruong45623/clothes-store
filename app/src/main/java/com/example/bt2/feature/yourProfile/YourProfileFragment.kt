@@ -1,7 +1,6 @@
 package com.example.bt2.feature.yourProfile
 
 import android.Manifest
-import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -11,19 +10,17 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.bt2.R
 import com.example.bt2.databinding.FragmentYourProfiileBinding
 import com.example.bt2.until.showPermissionRationale
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 
 class YourProfileFragment : Fragment() {
@@ -53,16 +50,9 @@ class YourProfileFragment : Fragment() {
         val arrayAdapter2 = ArrayAdapter(requireContext(), R.layout.dropdown_item_code_country, codeCountry)
         binding.codeCountry.setAdapter(arrayAdapter2)
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigateBack.collect{ navigate ->
-                    if (navigate) {
-                        findNavController().popBackStack()
-                        viewModel.onNavigationComplete()
-                    }
-                }
-            }
-        }
+        viewModel.navigateBack.onEach {
+            findNavController().popBackStack()
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         return binding.root
     }

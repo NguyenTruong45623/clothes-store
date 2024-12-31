@@ -7,13 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.bt2.R
 import com.example.bt2.databinding.FragmentVerifyCodeBinding
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class VerifyCodeFragment : Fragment() {
 
@@ -30,27 +29,14 @@ class VerifyCodeFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigateToNewPassWord.collect{ navigate ->
-                    if (navigate) {
-                        findNavController().navigate(R.id.action_verifyCodeFragment_to_newPasswordFragment)
-                        viewModel.onNavigationComplete()
-                    }
-                }
-            }
-        }
+        viewModel.navigateToNewPassWord.onEach {
+            val action = VerifyCodeFragmentDirections.actionVerifyCodeFragmentToNewPasswordFragment()
+            findNavController().navigate(action)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigateBack.collect{ navigate ->
-                    if (navigate) {
-                        findNavController().popBackStack()
-                        viewModel.onNavigationComplete()
-                    }
-                }
-            }
-        }
+        viewModel.navigateBack.onEach {
+            findNavController().popBackStack()
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         return binding.root
     }

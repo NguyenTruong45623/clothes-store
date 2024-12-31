@@ -2,27 +2,19 @@ package com.example.bt2.feature.signIn
 
 import android.graphics.Color
 import android.os.Bundle
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.TextPaint
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
-import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.bt2.R
 import com.example.bt2.databinding.FragmentSignInBinding
 import com.example.bt2.until.makeLinkClickable
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 
 class SignInFragment : Fragment() {
@@ -39,30 +31,18 @@ class SignInFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        makeLinkClickable(binding.tvSignIn, "Sign Up", Color.BLUE)
+        makeLinkClickable(binding.tvSignUp, "Sign Up", Color.BLUE)
         makeLinkClickable(binding.forgotPW, "Forgot Password?", Color.BLUE)
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigateToCreateAccount.collect{ navigate ->
-                    if (navigate) {
-                        findNavController().navigate(R.id.action_signInFragment_to_createAccountFragment)
-                        viewModel.onNavigationComplete()
-                    }
-                }
-            }
-        }
+        viewModel.navigateToCreateAccount.onEach {
+            val action = SignInFragmentDirections.actionSignInFragmentToCreateAccountFragment()
+            findNavController().navigate(action)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigateToVerifyCode.collect{ navigate ->
-                    if (navigate) {
-                        findNavController().navigate(R.id.action_signInFragment_to_verifyCodeFragment)
-                        viewModel.onNavigationComplete()
-                    }
-                }
-            }
-        }
+        viewModel.navigateToVerifyCode.onEach {
+            val action = SignInFragmentDirections.actionSignInFragmentToVerifyCodeFragment()
+            findNavController().navigate(action)
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         return binding.root
     }

@@ -1,29 +1,31 @@
 package com.example.bt2.feature.verifyCode
 
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 class VerifyCodeViewModel : ViewModel() {
 
-    private val _navigateToNewPassWord = MutableStateFlow(false)
-    val navigateToNewPassWord: StateFlow<Boolean> = _navigateToNewPassWord.asStateFlow()
+    private val _navigateToNewPassWord = MutableSharedFlow<Unit>()
+    val navigateToNewPassWord: SharedFlow<Unit> = _navigateToNewPassWord.asSharedFlow()
 
-    private val _navigateBack = MutableStateFlow(false)
-    val navigateBack: StateFlow<Boolean> = _navigateBack.asStateFlow()
+    private val _navigateBack = MutableSharedFlow<Unit>()
+    val navigateBack: SharedFlow<Unit> = _navigateBack.asSharedFlow()
 
 
     fun onClickVerifyButton() {
-        _navigateToNewPassWord.value = true
+        viewModelScope.launch {
+            _navigateToNewPassWord.emit(Unit)
+        }
     }
 
     fun onClickBackButton() {
-        _navigateBack.value = true
+        viewModelScope.launch {
+            _navigateBack.emit(Unit)
+        }
     }
 
-    fun onNavigationComplete() {
-        _navigateToNewPassWord.value = false
-        _navigateBack.value = false
-    }
 }

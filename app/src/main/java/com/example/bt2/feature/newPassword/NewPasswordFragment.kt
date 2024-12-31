@@ -7,20 +7,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.bt2.R
 import com.example.bt2.databinding.FragmentNewPasswordBinding
-import com.example.bt2.databinding.FragmentVerifyCodeBinding
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 class NewPasswordFragment : Fragment() {
 
     private lateinit var binding : FragmentNewPasswordBinding
-    private val viewModel : NewPassWordViewModel by viewModels()
+    private val viewModel : NewPasswordViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,16 +28,9 @@ class NewPasswordFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        lifecycleScope.launch {
-            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.navigateBack.collect{ navigate ->
-                    if (navigate) {
-                        findNavController().popBackStack()
-                        viewModel.onNavigationComplete()
-                    }
-                }
-            }
-        }
+        viewModel.navigateBack.onEach {
+            findNavController().popBackStack()
+        }.launchIn(viewLifecycleOwner.lifecycleScope)
 
         return binding.root
     }

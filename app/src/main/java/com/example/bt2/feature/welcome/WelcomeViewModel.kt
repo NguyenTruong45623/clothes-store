@@ -1,36 +1,29 @@
 package com.example.bt2.feature.welcome
 
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.Navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-import androidx.navigation.fragment.findNavController
-import com.example.bt2.R
-import com.example.bt2.feature.onboarding.OnBoardingFragment
-import com.example.bt2.feature.signIn.SignInFragment
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.launch
 
 class WelcomeViewModel : ViewModel() {
 
-    private val _navigateToSignIn = MutableStateFlow(false)
-    val navigateToSignIn: StateFlow<Boolean> = _navigateToSignIn.asStateFlow()
-    private val _navigateToOnBoarding = MutableStateFlow(false)
-    val navigateToOnBoarding: StateFlow<Boolean> = _navigateToOnBoarding.asStateFlow()
+    private val _navigateToSignIn = MutableSharedFlow<Unit>()
+    val navigateToSignIn: SharedFlow<Unit> = _navigateToSignIn.asSharedFlow()
+    private val _navigateToOnBoarding = MutableSharedFlow<Unit>()
+    val navigateToOnBoarding: SharedFlow<Unit> = _navigateToOnBoarding.asSharedFlow()
 
     fun onClickButtonLetStart() {
-        _navigateToOnBoarding.value = true
+        viewModelScope.launch {
+            _navigateToOnBoarding.emit(Unit)
+        }
     }
 
     fun onClickToSignIn() {
-        _navigateToSignIn.value = true
+        viewModelScope.launch {
+            _navigateToSignIn.emit(Unit)
+        }
     }
 
-    fun onNavigationComplete() {
-        _navigateToSignIn.value = false
-        _navigateToOnBoarding.value = false
-    }
 }
