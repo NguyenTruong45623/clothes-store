@@ -7,12 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.bt2.R
 import com.example.bt2.databinding.FragmentAccountCreateBinding
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class CreateAccountFragment : Fragment() {
 
@@ -27,10 +31,20 @@ class CreateAccountFragment : Fragment() {
 
         binding.viewModel = viewModel
 
-        viewModel.navigateToProfile.onEach {
-            val action = CreateAccountFragmentDirections.actionCreateAccountFragmentToYourProfileFragment()
-            findNavController().navigate(action)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.formState.collectLatest { state ->
+                    if (state.isClickToProfile) {
+                        val action =
+                            CreateAccountFragmentDirections.actionCreateAccountFragmentToYourProfileFragment()
+                        findNavController().navigate(action)
+
+                        viewModel.onNavigationComplete()
+                    }
+                }
+            }
+        }
+
 
         return binding.root
     }

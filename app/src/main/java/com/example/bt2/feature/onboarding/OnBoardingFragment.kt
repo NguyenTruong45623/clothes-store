@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.viewpager2.widget.ViewPager2
 import com.example.bt2.R
@@ -16,8 +18,10 @@ import com.example.bt2.feature.onboarding.ViewPage.OnBoarding1Fragment
 import com.example.bt2.feature.onboarding.ViewPage.OnBoarding2Fragment
 import com.example.bt2.feature.onboarding.ViewPage.OnBoarding3Fragment
 import com.google.android.material.tabs.TabLayoutMediator
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 class OnBoardingFragment : Fragment() {
 
@@ -72,10 +76,18 @@ class OnBoardingFragment : Fragment() {
             }
         })
 
-        viewModel.navigateToSignIn.onEach {
-            val action = OnBoardingFragmentDirections.actionOnBoardingFragmentToSignInFragment()
-            findNavController().navigate(action)
-        }.launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.formState.collectLatest { state ->
+                    if (state.isClickToSignIn) {
+                        val action = OnBoardingFragmentDirections.actionOnBoardingFragmentToSignInFragment()
+                        findNavController().navigate(action)
+                        viewModel.onNavigationComplete()
+                    }
+                }
+            }
+        }
 
         return binding.root
     }

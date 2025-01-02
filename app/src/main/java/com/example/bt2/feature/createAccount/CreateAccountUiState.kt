@@ -7,4 +7,5 @@ data class CreateAccountUiState(
     val nameError: String? = null,
     val emailError: String? = null,
     val passwordError: String? = null,
+    val isClickToProfile: Boolean = false,
 )

@@ -11,36 +11,34 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class NewPasswordViewModel : ViewModel() {
-    private val _formData = MutableStateFlow(NewPasswordUiState())
-    var formData = _formData.asStateFlow()
+    private val _formState = MutableStateFlow(NewPasswordUiState())
+    var formState = _formState.asStateFlow()
 
     private val _clearConfirmPasswordInput = MutableStateFlow(false)
     val clearConfirmPasswordInput = _clearConfirmPasswordInput.asStateFlow()
 
-    private val _navigateBack = MutableSharedFlow<Unit>()
-    val navigateBack: SharedFlow<Unit> = _navigateBack.asSharedFlow()
 
     fun onPasswordChanged(newPassword: String) {
-        _formData.update { it.copy(password = newPassword)}
+        _formState.update { it.copy(password = newPassword)}
     }
 
     fun onConfirmPasswordChanged(newConfirmPassword: String) {
         if (_clearConfirmPasswordInput.value) {
             _clearConfirmPasswordInput.value = false
         }
-        _formData.update { it.copy(confirmPassword = newConfirmPassword)}
+        _formState.update { it.copy(confirmPassword = newConfirmPassword)}
     }
 
     fun onClickNewPassWord() {
 
-        if (_formData.value.password.length < 8) {
-            _formData.update { currentState ->
+        if (_formState.value.password.length < 8) {
+            _formState.update { currentState ->
                 currentState.copy(
                     passwordError = "Mật khẩu phải có ít nhất 8 ký tự",
                 )
             }
-        } else if (_formData.value.confirmPassword != _formData.value.password) {
-            _formData.update { currentState ->
+        } else if (_formState.value.confirmPassword != _formState.value.password) {
+            _formState.update { currentState ->
                 currentState.copy(
                     confirmPasswordError = "Mật khẩu không khớp",
                     confirmPassword = "",
@@ -49,7 +47,7 @@ class NewPasswordViewModel : ViewModel() {
             }
             _clearConfirmPasswordInput.value = true
         } else {
-            _formData.update { currentState ->
+            _formState.update { currentState ->
                 currentState.copy(
                     passwordError = null,
                     confirmPasswordError = null
@@ -60,9 +58,10 @@ class NewPasswordViewModel : ViewModel() {
     }
 
     fun onClickBack() {
-         viewModelScope.launch {
-             _navigateBack.emit(Unit)
-         }
+        _formState.update { it.copy( isClickBack = true ) }
     }
 
+    fun onNavigationComplete() {
+        _formState.update { it.copy(isClickBack = false) }
+    }
 }

@@ -5,4 +5,5 @@ data class NewPasswordUiState(
     val confirmPassword: String = "",
     val confirmPasswordError: String? = null,
     val passwordError: String? = null,
+    val isClickBack: Boolean = false
 )

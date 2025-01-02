@@ -5,4 +5,6 @@ data class SignInUiState (
     val password: String = "",
     val emailError: String? = null,
     val passwordError: String? = null,
+    val isClickSignUp: Boolean = false,
+    val isClickVerifyPassword: Boolean = false
 )

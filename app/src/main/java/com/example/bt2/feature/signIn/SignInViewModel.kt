@@ -13,11 +13,6 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class SignInViewModel : ViewModel() {
-    private val _navigateToCreateAccount = MutableSharedFlow<Unit>()
-    val navigateToCreateAccount: SharedFlow<Unit> = _navigateToCreateAccount.asSharedFlow()
-
-    private val _navigateToVerifyCode = MutableSharedFlow<Unit>()
-    val navigateToVerifyCode: SharedFlow<Unit> = _navigateToVerifyCode.asSharedFlow()
 
     private val _formState = MutableStateFlow(SignInUiState())
     val formState: StateFlow<SignInUiState> = _formState.asStateFlow()
@@ -51,25 +46,26 @@ class SignInViewModel : ViewModel() {
         } else {
             _formState.update { currentState ->
                 currentState.copy(
-                    passwordError = null
+                    passwordError = null,
+                    emailError = null
                 )
             }
         }
     }
 
     fun onClickForgotPassword() {
-        viewModelScope.launch {
-            _navigateToVerifyCode.emit(Unit)
-        }
+        _formState.update { it.copy(isClickVerifyPassword = true) }
+    }
+
+    fun onClickSignUp() {
+        _formState.update { it.copy(isClickSignUp = true) }
+    }
+
+    fun onNavigationComplete() {
+        _formState.update { it.copy(isClickVerifyPassword = false) }
+        _formState.update { it.copy(isClickSignUp = false) }
     }
 
     private fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
-
-
-    fun onClickSignUp() {
-        viewModelScope.launch {
-            _navigateToCreateAccount.emit(Unit)
-        }
-    }
 
 }

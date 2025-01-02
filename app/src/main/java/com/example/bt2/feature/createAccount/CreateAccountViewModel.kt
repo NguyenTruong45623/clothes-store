@@ -18,9 +18,6 @@ class CreateAccountViewModel : ViewModel() {
     private val _formState = MutableStateFlow(CreateAccountUiState())
     val formState: StateFlow<CreateAccountUiState> = _formState.asStateFlow()
 
-    private val _navigateToProfile = MutableSharedFlow<Unit>()
-    val navigateToProfile: SharedFlow<Unit> = _navigateToProfile.asSharedFlow()
-
     fun onPasswordChanged(newPassword: String) {
         _formState.update { it.copy(password = newPassword) }
     }
@@ -57,21 +54,24 @@ class CreateAccountViewModel : ViewModel() {
             _formState.update { currentState ->
                 currentState.copy(
                     passwordError = "Mật khẩu phải có ít nhất 8 ký tự",
-                    emailError = null
+                    emailError = null,
+                    nameError = null
                 )
             }
         } else {
             _formState.update { currentState ->
                 currentState.copy(
-                    passwordError = null
+                    passwordError = null,
+                    emailError = null,
+                    isClickToProfile = true,
                 )
-            }
-            viewModelScope.launch {
-                _navigateToProfile.emit(Unit)
             }
         }
     }
 
+    fun onNavigationComplete() {
+        _formState.update { it.copy(isClickToProfile = false) }
+    }
 
     private fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }

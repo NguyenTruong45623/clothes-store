@@ -65,4 +65,8 @@
         android:id="@+id/newPasswordFragment"
         android:name="com.example.bt2.feature.newPassword.NewPasswordFragment"
         android:label="NewPasswordFragment" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.bt2.MainActivity"
+        android:label="MainActivity" />
 </navigation>
