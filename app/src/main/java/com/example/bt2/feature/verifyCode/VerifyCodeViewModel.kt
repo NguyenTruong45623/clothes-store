@@ -21,7 +21,6 @@ class VerifyCodeViewModel : ViewModel() {
     }
 
     fun onNavigationComplete() {
-        _formState.update { it.copy(isClickToNewPassword = false) }
-        _formState.update { it.copy(isClickBack = false) }
+        _formState.update { it.copy(isClickToNewPassword = false,isClickBack = false) }
     }
 }

@@ -26,8 +26,7 @@ class WelcomeViewModel : ViewModel() {
     }
 
     fun onNavigationComplete() {
-        _formState.update { it.copy(isClickToOnBoarding = false) }
-        _formState.update { it.copy(isClickToSignIn = false) }
+        _formState.update { it.copy(isClickToOnBoarding = false, isClickToSignIn = false) }
     }
 
 }

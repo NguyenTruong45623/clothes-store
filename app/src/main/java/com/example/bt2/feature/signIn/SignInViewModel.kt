@@ -62,8 +62,7 @@ class SignInViewModel : ViewModel() {
     }
 
     fun onNavigationComplete() {
-        _formState.update { it.copy(isClickVerifyPassword = false) }
-        _formState.update { it.copy(isClickSignUp = false) }
+        _formState.update { it.copy(isClickVerifyPassword = false, isClickSignUp = false) }
     }
 
     private fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()

@@ -14,8 +14,6 @@ class NewPasswordViewModel : ViewModel() {
     private val _formState = MutableStateFlow(NewPasswordUiState())
     var formState = _formState.asStateFlow()
 
-    private val _clearConfirmPasswordInput = MutableStateFlow(false)
-    val clearConfirmPasswordInput = _clearConfirmPasswordInput.asStateFlow()
 
 
     fun onPasswordChanged(newPassword: String) {
@@ -23,9 +21,6 @@ class NewPasswordViewModel : ViewModel() {
     }
 
     fun onConfirmPasswordChanged(newConfirmPassword: String) {
-        if (_clearConfirmPasswordInput.value) {
-            _clearConfirmPasswordInput.value = false
-        }
         _formState.update { it.copy(confirmPassword = newConfirmPassword)}
     }
 
@@ -45,7 +40,6 @@ class NewPasswordViewModel : ViewModel() {
                     passwordError = null
                 )
             }
-            _clearConfirmPasswordInput.value = true
         } else {
             _formState.update { currentState ->
                 currentState.copy(
