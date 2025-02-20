@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class NewPasswordViewModel : ViewModel() {
     private val _formState = MutableStateFlow(NewPasswordUiState())
-    var formState = _formState.asStateFlow()
+    val formState = _formState.asStateFlow()
 
 
 

@@ -22,6 +22,17 @@
             android:fontFamily="sans-serif"
             android:textFontWeight="700"
             android:textSize="25sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{viewModel.userModel.name + " - " + viewModel.userModel.email + " - " + viewModel.userModel.password}'
+            android:layout_gravity="center"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{viewModel.userProfileModel.uriImage + " - \n" + viewModel.userProfileModel.phone + " - \n" + viewModel.userProfileModel.gender}'
+            android:layout_gravity="center"/>
+
         <Space
             android:layout_width="match_parent"
             android:layout_height="20sp"/>
@@ -90,12 +101,18 @@
         </com.google.android.material.textfield.TextInputLayout>
         <TextView
             android:id="@+id/forgotPW"
-            android:onClick="@{() -> viewModel.onClickForgotPassword()}"
+            android:onClick="@{(v) -> viewModel.onClickForgotPassword(v)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:layout_marginVertical="5dp"
             android:text="@string/forgot_password" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="5dp"
+            android:textColor="@color/red"
+            android:text="@{viewModel.formState.showError}" />
         <Space
             android:layout_width="match_parent"
             android:layout_height="20sp"/>
@@ -103,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign In"
-            android:onClick="@{(v) -> viewModel.onClickSignIn()}"
+            android:onClick="@{(v) -> viewModel.onClickSignIn(v)}"
             android:textSize="20sp"
             android:paddingVertical="10sp"
             android:backgroundTint="@color/brown"/>
@@ -177,7 +194,7 @@
             android:layout_height="20dp"/>
         <TextView
             android:id="@+id/tvSignUp"
-            android:onClick="@{() -> viewModel.onClickSignUp()}"
+            android:onClick="@{(v) -> viewModel.onClickSignUp(v)}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"

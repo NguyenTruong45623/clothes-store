@@ -7,25 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
 import com.example.bt2.R
+import com.example.bt2.repository.local.UserDataProfileStore
+import com.example.bt2.repository.local.UserDataStore
 import com.example.bt2.databinding.FragmentSignInBinding
-import com.example.bt2.feature.onboarding.OnBoardingFragmentDirections
 import com.example.bt2.until.makeLinkClickable
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.launch
 
 
 class SignInFragment : Fragment() {
 
+    private lateinit var userDataStore: UserDataStore
+    private lateinit var userProfileDataStore: UserDataProfileStore
     private lateinit var binding: FragmentSignInBinding
-    private val viewModel : SignInViewModel by viewModels()
+    private lateinit var viewModel : SignInViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,28 +28,14 @@ class SignInFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_sign_in, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
+        userDataStore = UserDataStore(requireContext())
+        userProfileDataStore = UserDataProfileStore(requireContext())
+        viewModel = SignInViewModel(userDataStore,userProfileDataStore)
         binding.viewModel = viewModel
 
         makeLinkClickable(binding.tvSignUp, "Sign Up", Color.BLUE)
         makeLinkClickable(binding.forgotPW, "Forgot Password?", Color.BLUE)
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.formState.collectLatest { state ->
-                    if (state.isClickSignUp) {
-                        val action = SignInFragmentDirections.actionSignInFragmentToCreateAccountFragment()
-                        findNavController().navigate(action)
-                    }
-
-                    if (state.isClickVerifyPassword) {
-                        val action = SignInFragmentDirections.actionSignInFragmentToVerifyCodeFragment()
-                        findNavController().navigate(action)
-                    }
-
-                    viewModel.onNavigationComplete()
-                }
-            }
-        }
 
 
         return binding.root

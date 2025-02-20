@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     id("androidx.navigation.safeargs.kotlin")
+    id("kotlin-kapt")
 }
 
 android {
@@ -20,8 +21,8 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         dataBinding = true
+        viewBinding = true
     }
 
     buildTypes {
@@ -63,8 +64,15 @@ dependencies {
     implementation (libs.androidx.viewpager2)
     implementation (libs.material.v190)
     implementation (libs.material.v160)
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler)
+//    implementation (libs.glide)
+    kapt (libs.compiler)
     implementation (libs.pinview)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore.preferences.rxjava2)
+    implementation(libs.androidx.datastore.preferences.rxjava3)
+    implementation (libs.androidx.recyclerview)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.picasso)
 }

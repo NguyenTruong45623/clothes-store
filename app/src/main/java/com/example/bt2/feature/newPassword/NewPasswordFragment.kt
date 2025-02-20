@@ -33,6 +33,7 @@ class NewPasswordFragment : Fragment() {
 
         binding.viewModel = viewModel
 
+
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.formState.collectLatest { state ->

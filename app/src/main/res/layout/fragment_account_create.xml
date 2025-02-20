@@ -2,7 +2,6 @@
 <layout>
 
     <data>
-
         <variable
             name="viewModel"
             type="com.example.bt2.feature.createAccount.CreateAccountViewModel" />
@@ -146,7 +145,7 @@
             android:layout_height="10sp"/>
         <Button
             android:id="@+id/btnSignUp"
-            android:onClick="@{() -> viewModel.onClickSignUp()}"
+            android:onClick="@{(v) -> viewModel.onClickSignUp(v)}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Sign Up"

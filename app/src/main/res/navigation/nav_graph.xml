@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/splashFragment">
+    app:startDestination="@id/bottomNavigationBarFragment">
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.bt2.feature.splash.SplashFragment"
@@ -40,6 +41,9 @@
         <action
             android:id="@+id/action_signInFragment_to_verifyCodeFragment"
             app:destination="@id/verifyCodeFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_bottomNavigationBarFragment"
+            app:destination="@id/bottomNavigationBarFragment" />
     </fragment>
     <fragment
         android:id="@+id/createAccountFragment"
@@ -52,7 +56,11 @@
     <fragment
         android:id="@+id/yourProfileFragment"
         android:name="com.example.bt2.feature.yourProfile.YourProfileFragment"
-        android:label="YourProfileFragment" />
+        android:label="YourProfileFragment" >
+        <action
+            android:id="@+id/action_yourProfileFragment_to_signInFragment"
+            app:destination="@id/signInFragment" />
+    </fragment>
     <fragment
         android:id="@+id/verifyCodeFragment"
         android:name="com.example.bt2.feature.verifyCode.VerifyCodeFragment"
@@ -69,4 +77,9 @@
         android:id="@+id/mainActivity"
         android:name="com.example.bt2.MainActivity"
         android:label="MainActivity" />
+    <fragment
+        android:id="@+id/bottomNavigationBarFragment"
+        android:name="com.example.bt2.feature.bottomNavigationBarContainer.BottomNavigationBarFragment"
+        android:label="fragment_bottom_navigation_bar"
+        tools:layout="@layout/fragment_bottom_navigation_bar" />
 </navigation>
