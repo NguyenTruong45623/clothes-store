@@ -8,7 +8,11 @@
         android:id="@+id/favouritePage"
         android:name="com.example.bt2.feature.favouritePage.FavouritePageFragment"
         android:label="fragment_favourite_page"
-        tools:layout="@layout/fragment_favourite_page" />
+        tools:layout="@layout/fragment_favourite_page" >
+        <action
+            android:id="@+id/action_favouritePage_to_productDetailFragment"
+            app:destination="@id/productDetailFragment" />
+    </fragment>
     <fragment
         android:id="@+id/profilePage"
         android:name="com.example.bt2.feature.profilePage.ProfilePageFragment"
@@ -18,5 +22,17 @@
         android:id="@+id/homePage"
         android:name="com.example.bt2.feature.homePage.HomePageFragment"
         android:label="HomePageFragment"
-        tools:layout="@layout/fragment_home_page"/>
+        tools:layout="@layout/fragment_home_page">
+
+        <action
+            android:id="@+id/action_homePage_to_productDetailFragment2"
+            app:destination="@id/productDetailFragment"
+            app:popUpTo="@id/bottomNavigationBarFragment"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailFragment"
+        android:name="com.example.bt2.feature.productDetail.ProductDetailFragment"
+        android:label="ProductDetailFragment" />
 </navigation>

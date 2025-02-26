@@ -6,22 +6,24 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bt2.R
 import com.example.bt2.databinding.ItemProductBinding
-import com.example.bt2.repository.online.ClotheData
+import com.example.bt2.feature.bottomNavigationBarContainer.BottomBarViewModel
+import com.example.bt2.feature.bottomNavigationBarContainer.FavouriteClotheModel
 
 
-class ProductAdapter() :
+class ProductAdapter(private val bottomBarViewModel: BottomBarViewModel) :
     RecyclerView.Adapter<ProductAdapter.ProductHolder>() {
 
-    private var cloths = emptyList<ClotheData>()
+    private var cloths = emptyList<FavouriteClotheModel>()
 
-    fun updateItems(newCloths: List<ClotheData>) {
+    fun updateItems(newCloths: List<FavouriteClotheModel>) {
         this.cloths = newCloths
         notifyDataSetChanged()
     }
 
-    class ProductHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root){
-        fun bind(clotheData: ClotheData) {
-            binding.cloth = clotheData
+    inner class ProductHolder(val binding: ItemProductBinding) : RecyclerView.ViewHolder(binding.root){
+        fun bind(favouriteClotheModel: FavouriteClotheModel) {
+            binding.cloth = favouriteClotheModel
+            binding.bottomBarViewModel = bottomBarViewModel
             binding.executePendingBindings()
         }
     }

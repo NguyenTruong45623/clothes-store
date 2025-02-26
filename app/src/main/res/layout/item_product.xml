@@ -1,11 +1,12 @@
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
-            name="viewModel"
-            type="com.example.bt2.feature.homePage.HomePageViewModel" />
-        <variable
             name="cloth"
-            type="com.example.bt2.repository.online.ClotheData" />
+            type="com.example.bt2.feature.bottomNavigationBarContainer.FavouriteClotheModel" />
+        <variable
+            name="bottomBarViewModel"
+            type="com.example.bt2.feature.bottomNavigationBarContainer.BottomBarViewModel" />
 
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -18,6 +19,7 @@
             android:id="@+id/cvProduct"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{(v)-> bottomBarViewModel.onClickProductDetail(v,cloth)}"
             app:cardCornerRadius="16dp"
             app:cardElevation="4dp"
             android:layout_margin="8dp"
@@ -35,8 +37,8 @@
                     android:id="@+id/imgProduct"
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
-                    android:scaleType="fitCenter"
-                    app:imageUrl="@{cloth.image}"/>
+                    android:scaleType="fitXY"
+                    app:imageUrl = "@{cloth.image}" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -90,13 +92,15 @@
         <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/baseline_favorite_border_24"
-            app:tint="@color/gray"
+            android:onClick="@{() -> bottomBarViewModel.onProductFavoriteClick(cloth)}"
+            app:favoriteStatus="@{cloth.favourite}"
+            android:src="@drawable/baseline_favorite_24"
             android:background="@drawable/icon_favorite_bg"
             android:layout_margin="8dp"
             app:layout_constraintEnd_toEndOf="@id/cvProduct"
             app:layout_constraintTop_toTopOf="@id/cvProduct"
-            android:elevation="5dp"/> <!-- Thêm elevation cho ImageButton -->
+            android:elevation="5dp"
+            tools:ignore="ContentDescription" /> <!-- Thêm elevation cho ImageButton -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

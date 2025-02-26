@@ -17,8 +17,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.example.bt2.R
-import com.example.bt2.repository.local.UserDataProfileStore
 import com.example.bt2.databinding.FragmentYourProfiileBinding
+import com.example.bt2.repository.local.dataStore.UserDataStore
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
@@ -26,7 +26,7 @@ class YourProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentYourProfiileBinding
     private lateinit var viewModel : YourProfileViewModel
-    private lateinit var userDataProfileStore: UserDataProfileStore
+    private lateinit var dataStore: UserDataStore
 
 
     override fun onCreateView(
@@ -36,8 +36,8 @@ class YourProfileFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_your_profiile, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
 
-        userDataProfileStore = UserDataProfileStore(requireContext())
-        viewModel = YourProfileViewModel(userDataProfileStore)
+        dataStore = UserDataStore(requireContext())
+        viewModel = YourProfileViewModel(dataStore)
         binding.viewModel = viewModel
 
 
@@ -48,6 +48,13 @@ class YourProfileFragment : Fragment() {
         val gender = resources.getStringArray(R.array.gender)
         val arrayAdapter = ArrayAdapter(requireContext(), R.layout.dropdown_item, gender)
         binding.autoSelectGender.setAdapter(arrayAdapter)
+
+        binding.autoSelectGender.setOnItemClickListener { parent, _, position, _ ->
+            val selectedItem = parent.getItemAtPosition(position).toString()
+            Toast.makeText(requireContext(), "Bạn chọn: $selectedItem", Toast.LENGTH_SHORT).show()
+            viewModel.onGender(selectedItem)
+        }
+
 
         binding.codeCountry.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(
@@ -66,9 +73,6 @@ class YourProfileFragment : Fragment() {
             }
 
         }
-
-//        val arr = arrayOf("+1", "+84", "+18", "+14", "+43", "+13", "+15")
-//        binding.codeCountry.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, arr)
 
         return binding.root
     }

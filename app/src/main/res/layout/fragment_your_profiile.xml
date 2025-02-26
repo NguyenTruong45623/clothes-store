@@ -9,9 +9,11 @@
             type="com.example.bt2.feature.yourProfile.YourProfileViewModel" />
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:scrollbars="none">
         <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -108,6 +110,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:text="@{viewModel.userModel.name}"
                     android:inputType="text"
                     android:importantForAccessibility="yes" />
 
@@ -134,7 +137,7 @@
                     android:id="@+id/codeCountry"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:entries="@{viewModel.arrCountryPhone}"
+                    android:entries="@array/codeCountry"
                     android:text="+1"
                     android:textSize="15sp"/>
 
@@ -187,7 +190,6 @@
                     android:layout_height="match_parent"
                     android:paddingHorizontal="15dp"
                     android:inputType="none"
-                    android:onTextChanged="@{(text, start, before, count) -> viewModel.onGender(text.toString())}"
                     android:hint="Select" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -206,5 +208,5 @@
                 android:backgroundTint="@color/brown"/>
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

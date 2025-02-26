@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.bt2.R
-import com.example.bt2.repository.local.UserDataStore
+import com.example.bt2.repository.local.dataStore.UserDataStore
 import com.example.bt2.databinding.FragmentAccountCreateBinding
 
 

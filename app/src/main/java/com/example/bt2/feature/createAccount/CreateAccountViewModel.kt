@@ -5,8 +5,8 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.example.bt2.repository.local.UserDataStore
-import com.example.bt2.repository.local.UserModel
+import com.example.bt2.repository.local.dataStore.UserDataStore
+import com.example.bt2.repository.local.dataStore.UserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -84,7 +84,11 @@ class CreateAccountViewModel (private val userDataStore: UserDataStore) : ViewMo
                     UserModel(
                         name = _formState.value.name,
                         email = _formState.value.email,
-                        password = _formState.value.password
+                        password = _formState.value.password,
+                        uriImage = "",
+                        phone = "",
+                        gender = "",
+                        country = ""
                     )
                 )
             } catch (e: Exception) {

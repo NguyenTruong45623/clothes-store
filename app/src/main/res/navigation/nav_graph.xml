@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/bottomNavigationBarFragment">
+    app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.example.bt2.feature.splash.SplashFragment"
@@ -79,7 +79,14 @@
         android:label="MainActivity" />
     <fragment
         android:id="@+id/bottomNavigationBarFragment"
-        android:name="com.example.bt2.feature.bottomNavigationBarContainer.BottomNavigationBarFragment"
+        android:name="com.example.bt2.feature.bottomNavigationBarContainer.BottomBarFragment"
         android:label="fragment_bottom_navigation_bar"
-        tools:layout="@layout/fragment_bottom_navigation_bar" />
+        tools:layout="@layout/fragment_bottom_navigation_bar" >
+
+    </fragment>
+    <fragment
+        android:id="@+id/productDetailFragment2"
+        android:name="com.example.bt2.feature.productDetail.ProductDetailFragment"
+        android:label="ProductDetailFragment" />
+
 </navigation>

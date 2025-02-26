@@ -4,4 +4,5 @@ data class YourProfileUiState(
     val uriImage: String = "",
     val phone: String = "",
     val gender: String = "Nam",
-)
+    val country: String = "+1",
+    )

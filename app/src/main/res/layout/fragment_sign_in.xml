@@ -5,200 +5,198 @@
             name="viewModel"
             type="com.example.bt2.feature.signIn.SignInViewModel" />
     </data>
-    <androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_marginHorizontal="20sp"
-        android:orientation="vertical"
-        android:gravity="center_vertical">
+        android:fillViewport="true"
+        android:scrollbars="none">
+        <androidx.appcompat.widget.LinearLayoutCompat
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_marginHorizontal="20sp"
+            android:orientation="vertical"
+            android:gravity="center_vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="@string/sign_in"
-            android:fontFamily="sans-serif"
-            android:textFontWeight="700"
-            android:textSize="25sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text='@{viewModel.userModel.name + " - " + viewModel.userModel.email + " - " + viewModel.userModel.password}'
-            android:layout_gravity="center"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text='@{viewModel.userProfileModel.uriImage + " - \n" + viewModel.userProfileModel.phone + " - \n" + viewModel.userProfileModel.gender}'
-            android:layout_gravity="center"/>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/gray"
-            android:text="@string/hi_welcome_back_you_ve_been_missed" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="25sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/email" />
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:hintEnabled="false"
-            app:boxCornerRadiusTopStart="30dp"
-            app:boxCornerRadiusTopEnd="30dp"
-            app:boxCornerRadiusBottomStart="30dp"
-            app:boxCornerRadiusBottomEnd="30dp"
-            app:helperTextTextColor="@color/red"
-            app:helperText="@{viewModel.formState.emailError}"
-            app:boxBackgroundMode="outline">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/example_gmail_com"
-                android:onTextChanged="@{(text, start, before, count) -> viewModel.onEmailChanged(text.toString())}"
-                android:inputType="textEmailSubject"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20sp"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/password" />
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true"
-            app:hintEnabled="false"
-            app:boxCornerRadiusTopStart="30dp"
-            app:boxCornerRadiusTopEnd="30dp"
-            app:boxCornerRadiusBottomStart="30dp"
-            app:boxCornerRadiusBottomEnd="30dp"
-            app:helperTextTextColor="@color/red"
-            app:helperText="@{viewModel.formState.passwordError}"
-            app:boxBackgroundMode="outline">
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/pw"
-                android:inputType="textPassword"
-                android:onTextChanged="@{(text, start, before, count) -> viewModel.onPasswordChanged(text.toString())}"
-                android:importantForAccessibility="yes"/>
-
-        </com.google.android.material.textfield.TextInputLayout>
-        <TextView
-            android:id="@+id/forgotPW"
-            android:onClick="@{(v) -> viewModel.onClickForgotPassword(v)}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginVertical="5dp"
-            android:text="@string/forgot_password" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="5dp"
-            android:textColor="@color/red"
-            android:text="@{viewModel.formState.showError}" />
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20sp"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Sign In"
-            android:onClick="@{(v) -> viewModel.onClickSignIn(v)}"
-            android:textSize="20sp"
-            android:paddingVertical="10sp"
-            android:backgroundTint="@color/brown"/>
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-            <View
-                android:layout_width="1dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:layout_marginRight="10dp"
-                android:background="@color/brown"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Hoặc đăng nhập bằng"
-                android:textColor="@android:color/darker_gray"
-                android:textSize="14sp" />
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"
-                android:layout_marginLeft="10dp"
-                android:background="@color/brown"/>
-        </LinearLayout>
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"/>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center">
-            <ImageButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/round_background"
-                android:padding="15dp"
-                android:src="@drawable/apple_icon"
-                android:scaleType="fitCenter"
-                tools:ignore="ContentDescription" />
-            <Spinner
-                android:layout_width="20dp"
-                android:layout_height="match_parent"/>
-            <ImageButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:background="@drawable/round_background"
-                android:padding="15dp"
-                android:src="@drawable/google_icon"
-                android:scaleType="fitCenter"
-                tools:ignore="ContentDescription" />
-            <Spinner
-                android:layout_width="20dp"
-                android:layout_height="match_parent"/>
-            <ImageButton
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:padding="15dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/facebook_icon"
-                android:background="@drawable/round_background"
-                tools:ignore="ContentDescription" />
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:text="@string/sign_in"
+                android:fontFamily="sans-serif"
+                android:textFontWeight="700"
+                android:textSize="25sp"/>
 
-        </LinearLayout>
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"/>
-        <TextView
-            android:id="@+id/tvSignUp"
-            android:onClick="@{(v) -> viewModel.onClickSignUp(v)}"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginVertical="5dp"
-            android:text="Don't have an account? Sign Up" />
-    </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textColor="@color/gray"
+                android:text="@string/hi_welcome_back_you_ve_been_missed" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="25sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/email" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:hintEnabled="false"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:helperTextTextColor="@color/red"
+                app:helperText="@{viewModel.formState.emailError}"
+                app:boxBackgroundMode="outline">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/example_gmail_com"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.onEmailChanged(text.toString())}"
+                    android:inputType="textEmailSubject"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/password" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:passwordToggleEnabled="true"
+                app:hintEnabled="false"
+                app:boxCornerRadiusTopStart="30dp"
+                app:boxCornerRadiusTopEnd="30dp"
+                app:boxCornerRadiusBottomStart="30dp"
+                app:boxCornerRadiusBottomEnd="30dp"
+                app:helperTextTextColor="@color/red"
+                app:helperText="@{viewModel.formState.passwordError}"
+                app:boxBackgroundMode="outline">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/pw"
+                    android:inputType="textPassword"
+                    android:onTextChanged="@{(text, start, before, count) -> viewModel.onPasswordChanged(text.toString())}"
+                    android:importantForAccessibility="yes"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/forgotPW"
+                android:onClick="@{(v) -> viewModel.onClickForgotPassword(v)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginVertical="5dp"
+                android:text="@string/forgot_password" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="5dp"
+                android:textColor="@color/red"
+                android:text="@{viewModel.formState.showError}" />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20sp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sign In"
+                android:onClick="@{(v) -> viewModel.onClickSignIn(v)}"
+                android:textSize="20sp"
+                android:paddingVertical="10dp"
+                android:backgroundTint="@color/brown"/>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/brown"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hoặc đăng nhập bằng"
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="14sp" />
+                <View
+                    android:layout_width="0dp"
+                    android:layout_height="1dp"
+                    android:layout_weight="1"
+                    android:layout_marginLeft="10dp"
+                    android:background="@color/brown"/>
+            </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/round_background"
+                    android:padding="15dp"
+                    android:src="@drawable/apple_icon"
+                    android:scaleType="fitCenter"
+                    tools:ignore="ContentDescription" />
+                <Spinner
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"/>
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:background="@drawable/round_background"
+                    android:padding="15dp"
+                    android:src="@drawable/google_icon"
+                    android:scaleType="fitCenter"
+                    tools:ignore="ContentDescription" />
+                <Spinner
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent"/>
+                <ImageButton
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:padding="15dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/facebook_icon"
+                    android:background="@drawable/round_background"
+                    tools:ignore="ContentDescription" />
+
+            </LinearLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp"/>
+            <TextView
+                android:id="@+id/tvSignUp"
+                android:onClick="@{(v) -> viewModel.onClickSignUp(v)}"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginVertical="5dp"
+                android:text="Don't have an account? Sign Up" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 </layout>

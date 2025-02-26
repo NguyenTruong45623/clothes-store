@@ -7,5 +7,5 @@ data class SignInUiState (
     val passwordError: String? = null,
     val isClickSignUp: Boolean = false,
     val isClickVerifyPassword: Boolean = false,
-    val showError: String = "ZXczxc"
+    val showError: String = ""
 )

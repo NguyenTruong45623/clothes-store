@@ -14,6 +14,5 @@ object RetrofitCallData {
             .build()
 
 
-    val categoryService: CategoryInterface = retrofitService.create(CategoryInterface::class.java)
-    val productService : ProductInterface = retrofitService.create(ProductInterface::class.java)
+    val clothService : ClotheInterface = retrofitService.create(ClotheInterface::class.java)
 }

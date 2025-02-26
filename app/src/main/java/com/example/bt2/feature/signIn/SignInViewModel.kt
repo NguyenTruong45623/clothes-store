@@ -5,10 +5,8 @@ import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.findNavController
-import com.example.bt2.repository.local.UserDataProfileStore
-import com.example.bt2.repository.local.UserDataStore
-import com.example.bt2.repository.local.UserModel
-import com.example.bt2.repository.local.UserProfileModel
+import com.example.bt2.repository.local.dataStore.UserDataStore
+import com.example.bt2.repository.local.dataStore.UserModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,20 +14,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class SignInViewModel(private val userDataStore: UserDataStore, private val userProfileDataStore: UserDataProfileStore) : ViewModel() {
+class SignInViewModel(private val userDataStore: UserDataStore) : ViewModel() {
 
     private val _formState = MutableStateFlow(SignInUiState())
     val formState: StateFlow<SignInUiState> = _formState.asStateFlow()
 
-    private val _userModel = MutableStateFlow(UserModel("", "", ""))
+    private val _userModel = MutableStateFlow(UserModel("", "", "","","","",""))
     val userModel: StateFlow<UserModel> = _userModel
 
-    private val _userProfileModel = MutableStateFlow(UserProfileModel("", "", ""))
-    val userProfileModel: StateFlow<UserProfileModel> = _userProfileModel
 
     init {
         getDateUser()
-        getDateUserProfile()
     }
 
 
@@ -101,13 +96,7 @@ class SignInViewModel(private val userDataStore: UserDataStore, private val user
         view.findNavController().navigate(action)
     }
 
-    private fun getDateUserProfile() {
-        viewModelScope.launch(Dispatchers.IO) {
-            userProfileDataStore.getUserProfile().collect { user ->
-                _userProfileModel.value = user
-            }
-        }
-    }
+
 
     private fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
