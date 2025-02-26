@@ -6,22 +6,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.fragment.app.viewModels
 import com.example.bt2.R
+import com.example.bt2.repository.local.dataStore.UserDataStore
 import com.example.bt2.databinding.FragmentAccountCreateBinding
+
+
 class CreateAccountFragment : Fragment() {
 
     private lateinit var binding: FragmentAccountCreateBinding
-    private val viewModel: CreateAccountViewModel by viewModels()
+    private lateinit var userDataStore: UserDataStore
+    private lateinit var viewModel: CreateAccountViewModel
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_account_create, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
+        userDataStore = UserDataStore(requireContext())
+        viewModel = CreateAccountViewModel(userDataStore)
 
         binding.viewModel = viewModel
-        binding.fm = parentFragmentManager
+
+
+
 
         return binding.root
     }

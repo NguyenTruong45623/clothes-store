@@ -1,8 +1,10 @@
-import org.jetbrains.kotlin.storage.CacheResetOnProcessCanceled.enabled
 
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("androidx.navigation.safeargs.kotlin")
+    id ("kotlin-kapt")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -20,8 +22,8 @@ android {
     }
 
     buildFeatures {
-        viewBinding = true
         dataBinding = true
+        viewBinding = true
     }
 
     buildTypes {
@@ -34,11 +36,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "17"
     }
 }
 
@@ -63,8 +65,16 @@ dependencies {
     implementation (libs.androidx.viewpager2)
     implementation (libs.material.v190)
     implementation (libs.material.v160)
-    implementation (libs.glide)
-    annotationProcessor (libs.compiler)
     implementation (libs.pinview)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.androidx.datastore.preferences.rxjava2)
+    implementation(libs.androidx.datastore.preferences.rxjava3)
+    implementation (libs.androidx.recyclerview)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+    implementation (libs.github.glide.v4160)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
 }

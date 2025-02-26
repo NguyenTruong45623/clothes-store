@@ -1,64 +1,103 @@
 package com.example.bt2.feature.signIn
 
 import android.util.Patterns
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.commit
+import android.view.View
 import androidx.lifecycle.ViewModel
-import com.example.bt2.R
-import com.example.bt2.feature.createAccount.CreateAccountFragment
-import com.example.bt2.feature.verifyCode.VerifyCodeFragment
+import androidx.lifecycle.viewModelScope
+import androidx.navigation.findNavController
+import com.example.bt2.repository.local.dataStore.UserDataStore
+import com.example.bt2.repository.local.dataStore.UserModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class SignInViewModel : ViewModel() {
-    private val _formState = MutableStateFlow(SignInFormData())
-    val formState: StateFlow<SignInFormData> = _formState.asStateFlow()
+class SignInViewModel(private val userDataStore: UserDataStore) : ViewModel() {
+
+    private val _formState = MutableStateFlow(SignInUiState())
+    val formState: StateFlow<SignInUiState> = _formState.asStateFlow()
+
+    private val _userModel = MutableStateFlow(UserModel("", "", "","","","",""))
+    val userModel: StateFlow<UserModel> = _userModel
+
+
+    init {
+        getDateUser()
+    }
+
 
     fun onPasswordChanged(newPassword: String) {
-        _formState.value = formState.value.copy(password = newPassword)
+        _formState.update { it.copy(password = newPassword) }
     }
 
     fun onEmailChanged(newEmail: String) {
-        _formState.value = formState.value.copy(email = newEmail)
+        _formState.update { it.copy(email = newEmail) }
     }
 
-    fun onClickSignIn() {
+    fun onClickSignIn(view: View) {
 
-        val currentState = formState.value
-        var updatedState = currentState.copy()
-
-        updatedState = if (currentState.email.isEmpty()) {
-            updatedState.copy(emailError = "Vui lòng nhập email")
-        } else if(!currentState.email.isValidEmail()) {
-            updatedState.copy(emailError = "Email không hợp lệ")
+        if (_formState.value.email.isEmpty()) {
+            _formState.update { currentState ->
+                currentState.copy(emailError = "Vui lòng nhập email")
+            }
+        } else if(!_formState.value.email.isValidEmail()) {
+            _formState.update { currentState ->
+                currentState.copy(emailError = "Email không hợp lệ")
+            }
+        } else if (_formState.value.password.length < 8) {
+            _formState.update { currentState ->
+                currentState.copy(
+                    passwordError = "Vui lòng nhập mật khẩu",
+                    emailError = null
+                )
+            }
         } else {
-            updatedState.copy(emailError = null)
-        }
+            if (_formState.value.email == _userModel.value.email && _formState.value.password == _userModel.value.password) {
+                _formState.update { currentState ->
+                    currentState.copy(
+                        passwordError = null,
+                        emailError = null,
+                        showError = ""
+                    )
+                }
+                val action = SignInFragmentDirections.actionSignInFragmentToBottomNavigationBarFragment()
+                view.findNavController().navigate(action)
+            } else {
+                _formState.update { currentState ->
+                    currentState.copy(
+                        passwordError = null,
+                        emailError = null,
+                        showError = "Tài khoản hoặc mật khẩu không đúng"
+                    )
+                }
+            }
 
-        updatedState = if (currentState.password.length < 8) {
-            updatedState.copy(passwordError = "Vui lòng nhập mật khẩu")
-        } else {
-            updatedState.copy(passwordError = null)
         }
-
-        _formState.value = updatedState
     }
 
-    fun onClickForgotPassword(fragmentManager: FragmentManager) {
-        fragmentManager.commit {
-            replace(R.id.fragment_container, VerifyCodeFragment())
-            addToBackStack(null)
+    private fun getDateUser() {
+        viewModelScope.launch(Dispatchers.IO) {
+            userDataStore.getUser().collect { user ->
+                _userModel.value = user
+            }
         }
     }
+
+    fun onClickForgotPassword(view: View) {
+        _formState.update { it.copy(isClickVerifyPassword = true) }
+        val action = SignInFragmentDirections.actionSignInFragmentToVerifyCodeFragment()
+        view.findNavController().navigate(action)
+    }
+
+    fun onClickSignUp(view: View) {
+        val action = SignInFragmentDirections.actionSignInFragmentToCreateAccountFragment()
+        view.findNavController().navigate(action)
+    }
+
+
 
     private fun CharSequence?.isValidEmail() = !isNullOrEmpty() && Patterns.EMAIL_ADDRESS.matcher(this).matches()
 
-
-    fun onClickSignUp(fragmentManager: FragmentManager) {
-        fragmentManager.commit {
-            replace(R.id.fragment_container, CreateAccountFragment())
-            addToBackStack(null)
-        }
-    }
 }

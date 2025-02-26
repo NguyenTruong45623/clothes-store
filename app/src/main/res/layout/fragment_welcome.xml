@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
-        <variable
-            name="fm"
-            type="androidx.fragment.app.FragmentManager" />
         <variable
             name="viewModel"
             type="com.example.bt2.feature.welcome.WelcomeViewModel" />
@@ -11,7 +8,6 @@
     <LinearLayout android:layout_width="match_parent"
         android:layout_height="match_parent"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:orientation="vertical"
         android:gravity="top|center_horizontal"
         android:background="@color/white"
@@ -33,7 +29,7 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/banner"
                 app:shapeAppearance="@style/circle"
-                tools:ignore="ContentDescription" />
+                tools:ignore="ContentDescription,NestedWeights" />
 
             <Space
                 android:layout_width="15dp"
@@ -88,9 +84,10 @@
             android:text="@string/lorem_ipsum_dolor_sit_amet_consectetur"/>
 
         <Button
+            android:id="@+id/btnLetStart"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{(v) -> viewModel.onClickButtonLetStart(fm)}"
+            android:onClick="@{() -> viewModel.onClickButtonLetStart()}"
             android:layout_marginHorizontal="25dp"
             android:text="@string/let_s_get_start"
             android:paddingVertical="10dp"
@@ -100,14 +97,14 @@
 
         <TextView
             android:id="@+id/tvSignIn"
-            android:onClick="@{(v) -> viewModel.onClickToSignIn(fm)}"
+            android:onClick="@{() -> viewModel.onClickToSignIn()}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
             android:layout_marginHorizontal="25dp"
             android:gravity="center"
             android:text="@string/already_have_an_account_sign_in"
-            android:textSize="20sp"/>
+            android:textSize="18sp"/>
         <Space
             android:layout_width="match_parent"
             android:layout_height="25dp"/>

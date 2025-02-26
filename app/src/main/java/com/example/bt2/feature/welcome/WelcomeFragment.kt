@@ -3,22 +3,24 @@ package com.example.bt2.feature.welcome
 import android.graphics.Color
 import androidx.fragment.app.viewModels
 import android.os.Bundle
-import android.text.Html
-import android.text.SpannableString
-import android.text.Spanned
-import android.text.TextPaint
-import android.text.method.LinkMovementMethod
-import android.text.style.ClickableSpan
+import android.text.Html.fromHtml
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.activity.addCallback
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.bt2.R
 import com.example.bt2.databinding.FragmentWelcomeBinding
+import com.example.bt2.feature.verifyCode.VerifyCodeFragmentDirections
+import com.example.bt2.until.makeLinkClickable
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 
 class WelcomeFragment : Fragment() {
@@ -31,48 +33,34 @@ class WelcomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_welcome, container, false)
-
+        binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        binding.fm = parentFragmentManager
 
         makeLinkClickable(binding.tvSignIn, "Sign In", Color.BLUE)
-        binding.tvTitleTheFashionApp.text = Html.fromHtml("<font color=${Color.BLACK}>The </font> <font color=${Color.parseColor("#795548")}>Fashion App</font><font color=${Color.BLACK}> That\n Makes You Look Your Best </font>")
+        binding.tvTitleTheFashionApp.text = fromHtml("<font color=${Color.BLACK}>The </font> <font color=${Color.parseColor("#795548")}>Fashion App</font><font color=${Color.BLACK}> That\n Makes You Look Your Best </font>")
 
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            requireActivity().finish()
+        }
 
-//        viewLifecycleOwner.lifecycleScope.launch {
-//            viewModel.navigateTo.collect { destinationId ->
-//                findNavController().navigate(destinationId)
-//            }
-//        }
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.formState.collectLatest { state ->
+                    if (state.isClickToOnBoarding) {
+                        val action = WelcomeFragmentDirections.actionWelcomeFragmentToOnBoardingFragment()
+                        findNavController().navigate(action)
+                    }
 
-        return binding.root
-    }
+                    if (state.isClickToSignIn) {
+                        val action = WelcomeFragmentDirections.actionWelcomeFragmentToSignInFragment()
+                        findNavController().navigate(action)
+                    }
 
-    private fun makeLinkClickable(textView: TextView, clickableText: String, color: Int) {
-        val fullText = textView.text.toString()
-        val ss = SpannableString(fullText)
-
-        val clickableSpan = object : ClickableSpan() {
-
-            override fun updateDrawState(ds: TextPaint) {
-                super.updateDrawState(ds)
-                ds.color = color
-                ds.isUnderlineText = true
-            }
-
-            override fun onClick(widget: View) {
-
+                    viewModel.onNavigationComplete()
+                }
             }
         }
 
-        val startIndex = fullText.indexOf(clickableText)
-        val endIndex = startIndex + clickableText.length
-        ss.setSpan(clickableSpan, startIndex, endIndex, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
-
-        textView.text = ss
-        textView.movementMethod = LinkMovementMethod.getInstance()
-        textView.highlightColor = Color.TRANSPARENT
+        return binding.root
     }
-
-
 }

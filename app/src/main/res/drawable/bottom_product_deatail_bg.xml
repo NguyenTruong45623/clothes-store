@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#0D000000" /> <!-- Màu đổ bóng -->
+            <corners android:topLeftRadius="16dp" android:topRightRadius="16dp"/> <!-- Bo góc -->
+        </shape>
+    </item>
+    <item android:top="2dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#FFFFFF"/> <!-- Màu nền -->
+            <stroke android:width="2dp" android:color="#CCCCCC"/> <!-- Viền -->
+            <corners android:topLeftRadius="16dp" android:topRightRadius="16dp"/> <!-- Bo góc -->
+        </shape>
+    </item>
+</layer-list>

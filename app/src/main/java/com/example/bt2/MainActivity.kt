@@ -11,6 +11,8 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
 import androidx.fragment.app.replace
+import androidx.navigation.Navigation
+import androidx.navigation.findNavController
 import com.example.bt2.databinding.ActivityMainBinding
 import com.example.bt2.feature.splash.SplashFragment
 
@@ -29,11 +31,6 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        if(savedInstanceState == null) {
-            supportFragmentManager.commit {
-                replace(R.id.fragment_container, SplashFragment())
-            }
-        }
-
     }
+
 }

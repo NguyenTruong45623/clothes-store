@@ -1,30 +1,32 @@
 package com.example.bt2.feature.welcome
 
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.commit
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.bt2.R
-import com.example.bt2.feature.onboarding.OnBoardingFragment
-import com.example.bt2.feature.signIn.SignInFragment
+import com.example.bt2.feature.verifyCode.VerifyCodeState
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class WelcomeViewModel : ViewModel() {
 
-    fun onClickButtonLetStart(fragmentManager: FragmentManager) {
-        fragmentManager.commit {
-            replace(R.id.fragment_container, OnBoardingFragment())
-            addToBackStack(null)
-        }
+    private val _formState = MutableStateFlow(WelcomeUiState())
+    val formState: StateFlow<WelcomeUiState> = _formState.asStateFlow()
+
+    fun onClickButtonLetStart() {
+        _formState.update { it.copy(isClickToOnBoarding = true) }
     }
 
-    fun onClickToSignIn(fragmentManager: FragmentManager) {
-        fragmentManager.commit {
-            replace(R.id.fragment_container, SignInFragment())
-            addToBackStack(null)
-        }
+    fun onClickToSignIn() {
+        _formState.update { it.copy(isClickToSignIn = true) }
     }
+
+    fun onNavigationComplete() {
+        _formState.update { it.copy(isClickToOnBoarding = false, isClickToSignIn = false) }
+    }
+
 }
